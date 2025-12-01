@@ -14,7 +14,7 @@ class Settings(BaseSettings):
     """
     
     # Project Metadata
-    PROJECT_NAME: str = "Sentinell.ai"
+    PROJECT_NAME: str = "Multi-Agent-Supply-Chain-Resilience-System"
     VERSION: str = "1.0.0"
     
     # Google Cloud & AI Configuration

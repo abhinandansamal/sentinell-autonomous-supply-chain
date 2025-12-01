@@ -1,7 +1,7 @@
-# Sentinell.ai 🛡️
+# Multi-Agent Supply Chain Resilience System 🛡️
 ### Autonomous Supply Chain Resilience System
 
-![Build Status](https://img.shields.io/github/actions/workflow/status/abhinandansamal/sentinell-autonomous-supply-chain/deploy.yaml?style=for-the-badge&label=CI%2FCD)
+![Build Status](https://img.shields.io/github/actions/workflow/status/abhinandansamal/Multi-Agent-Supply-Chain-Resilience-System/deploy.yaml?style=for-the-badge&label=CI%2FCD)
 ![Python](https://img.shields.io/badge/Backend-FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white)
 ![React](https://img.shields.io/badge/Frontend-Next.js-black?style=for-the-badge&logo=next.js&logoColor=white)
 ![Cloud](https://img.shields.io/badge/Deploy-Google_Cloud_Run-4285F4?style=for-the-badge&logo=google-cloud&logoColor=white)
@@ -23,6 +23,25 @@ It autonomously:
 
 ---
 
+## 💼 Business Impact & Value
+
+**Sentinell.ai** is not just a chatbot; it is a **Resilience Engine** designed to solve a multi-billion dollar problem: **Supply Chain Fragility.**
+
+In a traditional workflow, recovering from a disruption (like a port strike) is a manual, sequential process involving emails, spreadsheets, and phone calls. This latency costs manufacturers millions in "Line Down" charges.
+
+**The Sentinell Advantage:**
+
+| Metric | Traditional Human Workflow | Sentinell.ai Agentic Workflow | **Impact** |
+| :--- | :--- | :--- | :--- |
+| **Detection Speed** | **Hours/Days** (Depends on news cycle) | **Seconds** (Real-time monitoring loop) | ⚡ **99% Faster** |
+| **Analysis Depth** | Manual cross-referencing of Excel vs. News | Automated MCP Database Query correlating Event + Inventory | 🧠 **Zero Cognitive Load** |
+| **Response Time** | **Days** (Email negotiations) | **Milliseconds** (A2A Protocol negotiation) | 🚀 **Instant Execution** |
+| **Compliance** | prone to human error / bypass | Hard-coded Logic Gates (Budget Pause > $5k) | 🛡️ **100% Policy Adherence** |
+
+**Real-World Application:**
+By automating the "OODA Loop" (Observe, Orient, Decide, Act), Sentinell allows Supply Chain Managers to shift focus from **fighting fires** to **strategic decision making**.
+
+---
 ## 🏗️ Architecture
 
 The system follows a microservices-based, multi-agent architecture deployed on **Google Cloud Run**.
@@ -93,9 +112,9 @@ graph TD
 #### 1. Clone & Setup
 
 ```bash
-git clone https://github.com/abhinandansamal/sentinell-autonomous-supply-chain.git
+git clone https://github.com/abhinandansamal/Multi-Agent-Supply-Chain-Resilience-System.git
 
-cd sentinell-autonomous-supply-chain
+cd multi-agent-supply-chain-resilience-system
 ```
 
 #### 2. Backend Setup
@@ -163,7 +182,7 @@ terraform apply
 ## 📂 Repository Structure
 
 ```text
-sentinell-autonomous-supply-chain/
+multi-agent-supply-chain-resilience-system/
 ├── .github/workflows/         # CI/CD Pipeline definitions
 │   └── deploy.yaml            # GitHub Actions workflow for testing & deployment
 ├── backend/                   # Python/FastAPI Agentic Backend

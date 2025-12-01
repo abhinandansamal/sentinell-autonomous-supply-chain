@@ -7,7 +7,7 @@ on:
       - 'backend/**' # Only run if backend changes
 
 env:
-  PROJECT_ID: sentinell-supply-chain # REPLACE with your actual ID if different
+  PROJECT_ID: sentinell-supply-chain
   REGION: us-central1
   SERVICE_NAME: sentinell-backend
 

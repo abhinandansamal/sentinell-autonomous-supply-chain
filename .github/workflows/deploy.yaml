@@ -1,12 +1,12 @@
 name: Deploy Sentinell Backend
 
 on:
+  # Trigger on any push to the main branch
   push:
-    branches: [ "main" ]
-    # paths:
-      # - 'backend/**' # Only run if backend changes
-      # - '.github/workflows/**' # Also run if we change the workflow file itself
-  # to allow manual triggering from GitHub UI
+    branches:
+      - main
+  
+  # Allow manual triggering from the Actions tab (Crucial for debugging)
   workflow_dispatch:
 
 env:
@@ -25,7 +25,6 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      # 1. Setup Python & Run Tests (CI)
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -38,19 +37,15 @@ jobs:
 
       - name: Run Tests
         env:
-          # Inject environment variables so config.py doesn't crash
           GOOGLE_CLOUD_PROJECT: ${{ env.PROJECT_ID }}
           GOOGLE_CLOUD_REGION: ${{ env.REGION }}
           LOG_LEVEL: "INFO"
         run: |
           cd backend
-          # We skip the live agent tests in CI because they require Google Cloud Auth
-          # Ideally, we'd mock Vertex AI here, but for this project we ensure syntax is good
           pip install pytest
-          # Verify imports work (Basic sanity check)
-          python -c "from src.main import app; print('✅ App Import Successful')"
+          # Verify imports and configuration loading
+          python -c "from src.main import app; from src.config import settings; print(f'✅ Config Loaded for project: {settings.GOOGLE_CLOUD_PROJECT}')"
 
-      # 2. Authenticate to Google Cloud (CD)
       - id: 'auth'
         name: 'Authenticate to Google Cloud'
         uses: 'google-github-actions/auth@v2'
@@ -60,13 +55,11 @@ jobs:
       - name: 'Set up Cloud SDK'
         uses: 'google-github-actions/setup-gcloud@v2'
 
-      # 3. Build & Push Container
       - name: Build and Push Container
         run: |
           cd backend
           gcloud builds submit --tag gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE_NAME }}:latest .
 
-      # 4. Deploy to Cloud Run
       - name: Deploy to Cloud Run
         run: |
           gcloud run deploy ${{ env.SERVICE_NAME }} \

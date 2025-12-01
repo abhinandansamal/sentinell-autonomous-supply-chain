@@ -1,3 +1,4 @@
+import os
 import requests
 from mcp.server.fastmcp import FastMCP
 from src.utils.logger import setup_logger
@@ -5,7 +6,9 @@ from src.utils.logger import setup_logger
 logger = setup_logger("tool_currency")
 mcp = FastMCP("Sentinell_Currency_Tool")
 
-EXCHANGE_API_URL = "http://localhost:8001/v1/exchange_rate"
+# DYNAMIC CONFIGURATION
+PORT = os.getenv("PORT", "8080")
+EXCHANGE_API_URL = f"http://127.0.0.1:{PORT}/supplier/v1/exchange_rate"
 
 @mcp.tool()
 def get_exchange_rate(currency_code: str) -> str:

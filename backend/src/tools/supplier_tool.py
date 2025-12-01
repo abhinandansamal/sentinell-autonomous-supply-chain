@@ -1,3 +1,4 @@
+import os
 import requests
 import json
 from mcp.server.fastmcp import FastMCP
@@ -6,8 +7,12 @@ from src.utils.logger import setup_logger
 logger = setup_logger("tool_supplier")
 mcp = FastMCP("Sentinell_Procurement")
 
-# The URL of our Mock Supplier (running on Port 8001)
-SUPPLIER_API_URL = "http://localhost:8001/v1/order"
+# In Cloud Run, everything runs on the PORT env var (default 8080).
+# Since we mounted the supplier at "/supplier", we access it via localhost:8080
+# DYNAMIC CONFIGURATION
+# We grab the same PORT the server is running on.
+PORT = os.getenv("PORT", "8080") 
+SUPPLIER_API_URL = f"http://127.0.0.1:{PORT}/supplier/v1/order"
 
 @mcp.tool()
 def get_price_quote(part_name: str, quantity: int, urgent: bool = False) -> str:
@@ -78,7 +83,7 @@ def order_parts_from_supplier(part_name: str, quantity: int, urgent: bool = Fals
             return result
 
     except requests.exceptions.ConnectionError:
-        err = "❌ Connection Failed: Is the Mock Supplier (Port 8001) running?"
+        err = "❌ Connection Failed: The internal Supplier Service is unreachable."
         logger.error(err)
         return err
     except Exception as e:

@@ -1,3 +1,4 @@
+import os
 import uvicorn
 import datetime
 from contextlib import asynccontextmanager
@@ -11,6 +12,7 @@ from src.utils.logger import setup_logger
 from src.agents.watchtower import WatchtowerAgent
 from src.agents.procurement import ProcurementAgent
 from src.api.models import ScanRequest, ScanResponse, PurchaseRequest, PurchaseResponse
+from src.a2a.mock_supplier import app as supplier_app
 
 # Initialize module-level logger
 logger = setup_logger("api_server")
@@ -77,6 +79,10 @@ app = FastAPI(
     description="API for Sentinell.ai - Autonomous Supply Chain Resilience System",
     lifespan=lifespan
 )
+
+# Mount the supplier app
+# This makes the supplier accessible at http://localhost:8080/supplier
+app.mount("/supplier", supplier_app)
 
 # Configure CORS (Cross-Origin Resource Sharing)
 # Required to allow the Frontend (running on a different port/domain) to communicate with this API.
@@ -204,5 +210,7 @@ async def trigger_purchase(request: PurchaseRequest) -> PurchaseResponse:
             raise HTTPException(status_code=500, detail=str(e))
 
 if __name__ == "__main__":
-    # Local Development Entry Point
-    uvicorn.run("src.main:app", host="0.0.0.0", port=8000, reload=True)
+    # Get port from environment or default to 8080 (Cloud Run standard)
+    port = int(os.getenv("PORT", 8080))
+    logger.info(f"🚀 Starting server on port {port}...")
+    uvicorn.run("src.main:app", host="0.0.0.0", port=port, reload=True)

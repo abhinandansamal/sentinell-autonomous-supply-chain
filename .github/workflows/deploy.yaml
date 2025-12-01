@@ -3,9 +3,11 @@ name: Deploy Sentinell Backend
 on:
   push:
     branches: [ "main" ]
-    paths:
-      - 'backend/**' # Only run if backend changes
-      - '.github/workflows/**' # Also run if we change the workflow file itself
+    # paths:
+      # - 'backend/**' # Only run if backend changes
+      # - '.github/workflows/**' # Also run if we change the workflow file itself
+  # to allow manual triggering from GitHub UI
+  workflow_dispatch:
 
 env:
   PROJECT_ID: sentinell-supply-chain
